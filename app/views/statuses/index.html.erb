@@ -1,15 +1,23 @@
 <div class="page-header">
   <h1>All of the Statuses</h1>
+  <!--It displays all the list of existing statuses .
+   and allows the user to create or Post the new status. -->
+
 </div>
 
 <%= link_to "Post a New Status", new_status_path, class: "btn btn-success" %>
+<!--  Displaying the each status content and the user name-->
 
 <% @statuses.each do |status| %>
 <div class="status">
   <strong> Name</strong>
   <p><%= status.content %></p>
   <div class="meta">
+    <!-- Diplaying the updated time of the users status.
+     In other words the time posted of the status by the user.-->
     <%= link_to time_ago_in_words(status.created_at) + " ago", status %> 
+    <!--  If the user wants to edit or delete the status , it could be done .
+    Allowing the user to delete and edit the existing status.-->
     <span class="admin">
       | <%= link_to "Edit", edit_status_path(status) %> | 
       <%= link_to "Delete", status, method: :delete, data: { confirm: "Are you sure your want to delete this status?"} %>
