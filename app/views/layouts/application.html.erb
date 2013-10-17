@@ -15,6 +15,21 @@
 				<a href="#" class="brand"> Pingme </a>
 				<ul class="nav">
 					<li><%= link_to "All Statuses", statuses_path %></li>
+				</ul>
+				<!-- Displaying the full name of the user to the right side on the top.-->
+
+				<ul class= "nav pull-right">
+					<!-- If the current user name is invalid , it returns
+					the user to the registration page.-->
+			
+					<% if user_signed_in? %>
+						<li><%= link_to current_user.full_name, edit_user_registration_path %></li>
+						<li><%= link_to "Log Out", destroy_user_session_path, method: :delete %></li>
+						<% else %>
+						<li><%= link_to "Register", new_user_registration_path %></li>
+						<li><%= link_to "Log in", new_user_session_path %><li>
+						<% end %>
+					
 			</div>
 		</div>
 	</div>
