@@ -26,7 +26,7 @@ class StatusesControllerTest < ActionController::TestCase
        assert_response :success
   end
 
-#Before the user post anything new status ,it checks the user to sign in to that activity.
+#Before the user post anything new status ,it checks whether the user is logged in or not!
 test "should be logged in to post a status" do
   post :create, status: {content: "Hello"}
   assert_redirected_to new_user_session_path
@@ -34,7 +34,7 @@ test "should be logged in to post a status" do
 end
 
 
-  test "should create status when logged in  " do
+  test "should create status when logged in"do
     sign_in users(:Prabhakar) 
     assert_difference('Status.count') do
       post :create, status: { content: @status.content }
@@ -59,7 +59,7 @@ end
 
   test "should  redirect status update when not logged in" do
     put :update, id: @status, status: { content: @status.content }
-    assert_responce :redirect
+    assert_response :redirect
     assert_redirected_to status_path(assigns(:status))
   end
 

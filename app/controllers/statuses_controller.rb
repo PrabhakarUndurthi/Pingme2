@@ -1,13 +1,13 @@
 class StatusesController < ApplicationController
   before_filter :authenticate_user!, only: [:new, :create, :edit, :update]
   #GET /statuses
-  #GET /statuses.Prabhakar
+  #GET /statuses.json
   def index
     @statuses = Status.all
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @statuses }
+      format.json{ render json: @statuses }
     end
   end
 
@@ -78,7 +78,7 @@ class StatusesController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to statuses_url }
-      format.json { head :no_content }
+      format.json{ head :no_content }
     end
   end
 end

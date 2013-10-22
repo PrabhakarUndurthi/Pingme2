@@ -55,7 +55,7 @@
 	test "a user can have a correctly formatted profile name"do
 	user =User.new(first_name: 'Michel', last_name: 'Joe',email: "micheljoe85@gmail.com")
 	user.password = user.password_confirmation = 'hfkdkja'
-	user.profile_name = "Joe"
+	user.profile_name = "MichelJoe"
 	assert.user.valid?
 
 	  end
