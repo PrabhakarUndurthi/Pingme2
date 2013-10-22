@@ -10,13 +10,14 @@ class StatusTest < ActiveSupport::TestCase
   	assert !status.errors[:content].empty?	
   end
 
-
+#Validating the minimum no of character in the status .i.e two
   test "that a status's contnet is at least 2 letters "do
   status = Status.new
   status.content = "H"
   assert !status.save
   assert !status.errors[:content].empty?
   end
+  #Validating the user to provide the userid for the status.
   test "that a status has a user id" do
     status = Status.new
     status.content= "Hello"
