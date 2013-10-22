@@ -20,6 +20,9 @@
       assert_not-empty assigns(:statuses)
 
     end
+
+    # when the user enters the correct profile name , it displays 
+    #the user name and the statuse of the user.
     test "only shows the correct user's statuses"do
     get :show, id: users(:Prabhakar).profile_name
     assigns(:statuses).each do |status|
