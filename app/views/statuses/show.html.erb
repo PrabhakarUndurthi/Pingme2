@@ -4,16 +4,11 @@
 		<!-- Show the full name of the user, while the user navigate to the show page-->
 	  <b>Name:</b>
 	  <%= @status.user.full_name %> 
-
 	</p>
-
-		<!--  While the uesr reading the old status ,  the user can edit the status and he can come back by clicking 
-	on the back button to redirect from that page.-->
-
-	<p>
-	  <strong>Content:</strong>
-	  <%= @status.content %>
+		<!--  While the user reading the old status ,  the user can edit the status and he can come back by clicking on the back button to redirect from that page.-->
+     <p>
+	   <strong>Content:</strong>
+	   <%= @status.content %>
 	</p>
-
 	<%= link_to 'Edit', edit_status_path(@status) %> |
 	<%= link_to 'Back', statuses_path %>

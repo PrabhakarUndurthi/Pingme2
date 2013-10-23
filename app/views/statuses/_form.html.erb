@@ -4,17 +4,17 @@
       <h2><%= pluralize(@status.errors.count, "error") %> prohibited this status from being saved:</h2>
 
       <ul>
-      <% @status.errors.full_messages.each do |msg| %>
+        <% @status.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
-      </ul>
-    </div>
-  <% end %>
+     </ul>
+   </div>
+ <% end %>
   <!-- Displaying the full name of the current user.  -->
-    <%= f.input :user_id , collection: User.all, label_method: :full_name %>
+    <!--<%= f.input :user_id , collection: User.all, label_method: :full_name %> -->
    <%= f.input :content %>
   <div class= "form-actions">
     <%= f.button :submit %>
-  </div>
+   </div>
 <% end %>
 
