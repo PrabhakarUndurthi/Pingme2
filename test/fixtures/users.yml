@@ -2,16 +2,16 @@ prabhakar:
   first_name: "Prabhakar"
   last_name: "Undurthi"
   email: "undurthi_prabhakar@gmail.com"
-  profile_name: "Prabhakar"
+  profile_name: "prabhakar"
 
-michelJoe:
+michel:
   first_name: "Michel"
   last_name: "Joe"
   email: "micheljoe85@gmail.com"
-  profile_name: "MichelJoe"
+  profile_name: "micheljoe"
 
-zukeBurg:
+zuke:
   first_name:"Zuke"
   last_name:"Burg"
   email:"zukeburg@gmail.com"
-  profile_name:"ZukeBurg"
+  profile_name:"zukeburg"

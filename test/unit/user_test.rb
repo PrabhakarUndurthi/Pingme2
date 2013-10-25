@@ -31,8 +31,8 @@
 		#If the user enter ,allreadt existing name , it throws an error.
 		test  "a.user should enter a.unique profile name" do 
 			user = User.new
-			user.profile_name = "Prabhakar Undurthi"
-			user.email =   "undurthi_prabhakar@aol.com"
+			user.profile_name = "Prabhakar"
+			user.email =   "undurthi.prabhakar@gmail.com"
 			user.first_name = "Prabhakar"
 			user.last_name = "Undurthi"
 			user.password ="password"
@@ -56,19 +56,23 @@
 
 	test "a user can have a correctly formatted profile name"do
 	user =User.new(first_name: 'Michel', last_name: 'Joe',email: "micheljoe85@gmail.com")
-	user.password = user.password_confirmation = 'hfkdkja'
-	user.profile_name = "MichelJoe"
+	user.password = user.password_confirmation = 'micheljoe@#85'
+	user.profile_name = "micheljoe"
 	assert.user.valid
  end
 
  test "that no error is raised when trying to access a friend list"do
  assert_nothing_raisedd do
- 	users(:Prabhakar).friends
+ 	users(:prabhakar).friends
    end
   end
   test "That creating friendships on a user works"do
-  users(:Prabhakar).friends << users(:Zuke)
-  assert.users(:Prabhakar).friends.include?(users(:Zuke))
+  users(:prabhakar).friends << users(:zuke)
+  assert.users(:prabhakar).friends.include?(users(:Zuke))
+  end
+
+  test "that calling to_param on a user returns the profile_name" do
+    assert_equal "Prabhakar", users(:prabhakar).to_param
   end
 end
 

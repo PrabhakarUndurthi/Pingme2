@@ -21,7 +21,7 @@ class StatusesControllerTest < ActionController::TestCase
 
 # Taking  the user to the new page, after  succesfull login details entered  by  the user.
   test "should render the new page when logged in" do
-    sign_in users(:Prabhakar) 
+    sign_in users(:prabhakar) 
     get :new
     assert_response :success
   end
@@ -35,7 +35,7 @@ end
 
 
   test "should create status when logged in"do
-    sign_in users(:Prabhakar) 
+    sign_in users(:prabhakar) 
     assert_difference('Status.count') do
     post :create, status: { content: @status.content }
     end
@@ -45,13 +45,13 @@ end
 
 
   test "should create status  for the current user when logged in"do
-    sign_in users(:Prabhakar) 
+    sign_in users(:prabhakar) 
     assert_difference('Status.count') do
-    post :create, status: { content: @status.content, user_id: users(:MichelJoe).id }
+    post :create, status: { content: @status.content, user_id: users(:michel).id }
     end
 
     assert_redirected_to status_path(assigns(:status))
-    assert_equal assigns(:status).user_id, users(:Prabhakar).id
+    assert_equal assigns(:status).user_id, users(:prabhakar).id
 
   end
 
@@ -64,7 +64,7 @@ end
 
 # Allowing the user to edit the status when logged in.
   test "should get edit when logged in " do
-    sign_in users(:Prabhakar) 
+    sign_in users(:prabhakar) 
     get :edit, id: @status
     assert_response :success
   end
@@ -76,23 +76,23 @@ end
   end
 
   test "Should update status when logged in "do
-    sign_in users(:Prabhakar)
+    sign_in users(:prabhakar)
     put :update, id:@status,status: {content: @status.content}
     assert_redirected_to status_path(assigns(:status))
 end
 
 test "Should update status for the current user  when logged in "do
-  sign_in users(:Prabhakar)
-  put :update, id:@status,status: {content: @status.content, user_id: users(:MichelJoe).id}
+  sign_in users(:prabhakar)
+  put :update, id:@status,status: {content: @status.content, user_id: users(:michel).id}
   assert_redirected_to status_path(assigns(:status))
-  assert_equal assigns(:status).user_id,users(:Prabhakar).id
+  assert_equal assigns(:status).user_id,users(:prabhakar).id
 end
 
 test "Should  not update status if nothing has changed "do
-  sign_in users(:Prabhakar)
+  sign_in users(:prabhakar)
   put :update, id:@status
   assert_redirected_to status_path(assigns(:status))
-  assert_equal assigns(:status).user_id,users(:Prabhakar).id
+  assert_equal assigns(:status).user_id,users(:prabhakar).id
 end
 
 

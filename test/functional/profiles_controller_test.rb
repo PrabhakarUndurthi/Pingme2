@@ -17,7 +17,7 @@
         test "that variables are assigned on successful profile viewing"do
         get :show, id: users(:Prabhakar).profile_name
         assert assigns(:user)
-        assert_not-empty assigns(:statuses)
+        assert_not_empty assigns(:statuses)
 
       end
 
@@ -29,6 +29,7 @@
         assert_equal users(:Prabhakar), status.user
       end
     end
+  end
 
 
 
