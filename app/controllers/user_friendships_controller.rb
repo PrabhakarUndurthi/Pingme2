@@ -1,20 +1,19 @@
 
 	class UserFriendshipsController < ApplicationController
 		before_filter :authenticate!, only: [:new]
-		def new
-			if  params[:friend_id]
-
-				@friend = User.where(profile_name: params[:friend_id]).first
-				raise ActiveRecord::RecordNotFound if @friend.nil?
-				#@friend = User.find(params[:friend_id])
-	            @user_friendship = current_user.user_friendships.new(friend: @friend)
-				#@user_friendship = current_user_friendships.new(friend: @friend)
-			else
-				flash[:error] = "Friend required"
-			end	
-		rescue ActiveRecord::RecordNotFound
-			render file: 'public/404', status: :not_found
-		end
+			def new
+				if  params[:friend_id]
+					@friend = User.where(profile_name: params[:friend_id]).first
+					raise ActiveRecord::RecordNotFound if @friend.nil?
+					#@friend = User.find(params[:friend_id])
+		            @user_friendship = current_user.user_friendships.new(friend: @friend)
+					#@user_friendship = current_user_friendships.new(friend: @friend)
+				else
+					flash[:error] = "Friend required"
+				end	
+			rescue ActiveRecord::RecordNotFound
+				render file: 'public/404', status: :not_found
+			end
 
 
 		def create
@@ -35,15 +34,20 @@
 
 		  context "with a valid friend_id"do
 		    setup do
-		    	post :create,friend_id: users(:zuke)
+		    	#post :create,friend_id: users(:zuke)
+		    	post :create, friend_id: users(:zuke).profile_name
 		    end
+		 
 
 		    should"assign a friend object"do
 		      assert assigns(:friend)
 		     end
 		   end
-		 end
-	   end
+		end
+	end
+end
+
+		 
 	    
 	  
 	 

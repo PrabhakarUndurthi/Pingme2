@@ -68,7 +68,7 @@
   end
   test "That creating friendships on a user works"do
   users(:prabhakar).friends << users(:zuke)
-  assert.users(:prabhakar).friends.include?(users(:Zuke))
+  assert.users(:prabhakar).friends.include?(users(:zuke))
   end
 
   test "that calling to_param on a user returns the profile_name" do

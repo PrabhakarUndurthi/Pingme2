@@ -15,7 +15,7 @@
         end
 
         test "that variables are assigned on successful profile viewing"do
-        get :show, id: users(:Prabhakar).profile_name
+        get :show, id: users(:prabhakar).profile_name
         assert assigns(:user)
         assert_not_empty assigns(:statuses)
 
@@ -24,9 +24,9 @@
       # when the user enters the correct profile name , it displays 
       #the user name and the statuse of the user.
       test "only shows the correct user's statuses"do
-      get :show, id: users(:Prabhakar).profile_name
+      get :show, id: users(:prabhakar).profile_name
       assigns(:statuses).each do |status|
-        assert_equal users(:Prabhakar), status.user
+        assert_equal users(:prabhakar), status.user
       end
     end
   end
