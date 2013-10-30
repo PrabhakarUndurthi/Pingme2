@@ -42,8 +42,8 @@
 		 end
 
 
-	       #Allowing the user to enter the profile name without any spaces.
-	       #If the user enter the profile name with spaces ,it throws an error.
+	       # Allowing the user to enter the profile name without any spaces.
+	       # If the user enter the profile name with spaces ,it throws an error.
 		   test "a user should have a profile name without spaces" do
 		   	user = User.new
 		   	user =User.new(first_name: 'Michel', last_name: 'Joe',email: "micheljoe85@gmail.com")
@@ -58,7 +58,7 @@
 	user =User.new(first_name: 'Michel', last_name: 'Joe',email: "micheljoe85@gmail.com")
 	user.password = user.password_confirmation = 'micheljoe@#85'
 	user.profile_name = "micheljoe"
-	assert.user.valid
+	assert.user.valid?
  end
 
  test "that no error is raised when trying to access a friend list"do
@@ -67,8 +67,9 @@
    end
   end
   test "That creating friendships on a user works"do
-  users(:prabhakar).friends << users(:zuke)
-  assert.users(:prabhakar).friends.include?(users(:zuke))
+  users(:prabhakar).pending_friends << users(:zuke)
+  users(:prabhakar).pending_friends.reload
+  assert.users(:prabhakar).pending_friends.include?(users(:zuke))
   end
 
   test "that calling to_param on a user returns the profile_name" do

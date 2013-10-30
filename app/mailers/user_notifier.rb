@@ -12,9 +12,6 @@ class UserNotifier < ActionMailer::Base
   	     subject: "#{@user.first_name}  wants to be friends on Pingme"
   	 end
 
-
-
-
   	 def friend_requested(user_friendship_id)
   	user_friendship =  UserFriendship.find(user_friendship_id)
 

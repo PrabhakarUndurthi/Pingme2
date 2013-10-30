@@ -8,7 +8,7 @@
         end
 
         #If the user profle name is not found , then it throws an error message 
-        #which contains the 404 code.
+        # which contains the 404 code.
         test "Should render a 404 on profile not found"do
         get :show, id: "doesn't exist"
         assert_response :not_found
