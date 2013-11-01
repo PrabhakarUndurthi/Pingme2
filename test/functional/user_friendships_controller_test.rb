@@ -18,6 +18,9 @@ class UserFriendshipsControllerTest < ActionController::TestCase
    setup do
      @friendship1 = create(:pending_user_friendship, user:users(:prabhakar), friend: create(:user,first_name: 'Pending', last_name:'Friend'))
       @friendship2 =  create(:accepted_user_friendship,user: users(:prabhakar), friend: create(:user,first_name:'Active', last_name: 'Friend'))
+      @friendship3 =  create(:requested_user_friendship,user: users(:prabhakar), friend: create(:user,first_name:'Requested', last_name: 'Friend'))
+      @friendship4 = user_friendships(:blocked_by_prabhakar)
+
    	  sign_in users(:prabhakar)
       get  :index
    end
@@ -57,8 +60,29 @@ class UserFriendshipsControllerTest < ActionController::TestCase
        assert_select "em", "Friendship started #{@friendship2.updated_at}."
      end
    end
+
+   context"blocked users"
+    setup do 
+      get :index , list: 'blocked'
+    end
+    should"get the index without error"do 
+      assert_response :success
+     end
+
+
+     should "not display pending or active friend's names" do 
+       assert_no_match /Pending\ Friend/, response.body
+       assert_no_match /Active\ Friend/, response.body
+     end
+
+     should "display blocked friend names"do 
+      assert_match /Blocked\ Friend/, response.body
+    end
+    
+   end
   end
 end
+
 
 
    should "get new and return success"do
@@ -318,7 +342,7 @@ end
       should "update the user friendship state to blocked" do 
         assert_equal 'blocked', @user_friendship.state
       end
-      
+
 
 
   end

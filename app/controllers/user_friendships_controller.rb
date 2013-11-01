@@ -4,9 +4,17 @@
 		respond_to :html, :json
 
 		def index
+			case  params[:list]
+			when nil
 			@user_friendship = current_user.user_friendship.all
+		when 'blocked'
+			@user_friendship = current_user.blocked_user_friendship.all
+		end
+
 			respond_with @user_friendships
 		end
+
+		
 		def accept
 			@user_friendship = current_user.user_friendship.find(params[:id])
 			redirect_to user_friendship_path
@@ -24,7 +32,7 @@
 		if @user_friendship.block!
 			flash[:success] = "You have blocked #{@user_friendship.friend.first_name}"
 		else
-			flash[:success] = "That friendship could not be blocked"
+			flash[:success] = "That friendship could not be blocked."
 
 			end
 

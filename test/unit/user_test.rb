@@ -7,6 +7,8 @@
 		should have_many(:pending_friends)
 		should have_many(:requested_user_friendships)
 		should have_many(:requested_friends)
+		should have_many(:blocked_user_friendships)
+		should have_many(:blocked_friends)
 
 	#Allowing the user to enter the first_name
 	#If the fails to enter the characters,it throws an error
@@ -80,4 +82,3 @@
     assert_equal "Prabhakar", users(:prabhakar).to_param
   end
 end
-

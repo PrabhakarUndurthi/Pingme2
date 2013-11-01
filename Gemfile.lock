@@ -141,7 +141,7 @@ PLATFORMS
 DEPENDENCIES
   coffee-rails (~> 3.2.1)
   devise
-  draper
+  draper (~> 1.0)
   factory_girl_rails
   jquery-rails
   js-routes

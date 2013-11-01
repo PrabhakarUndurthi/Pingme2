@@ -16,3 +16,10 @@ zuke:
   last_name:"Burg"
   email:"zukeburg@gmail.com"
   profile_name:"zukeburg"
+
+
+  blocked_friend:
+    first_name: 'Blocked'
+    last_name: 'Friend'
+    email: 'blocked@gmail.com'
+    profile_name: 'youblockedme'
