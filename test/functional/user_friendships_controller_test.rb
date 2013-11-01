@@ -285,7 +285,7 @@ context "#destroy"do
          delete :destroy, id: @user_friendship
        end
      end
-     
+       
   end
 end
 

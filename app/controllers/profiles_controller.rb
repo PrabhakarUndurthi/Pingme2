@@ -6,8 +6,8 @@ class ProfilesController < ApplicationController
       render action: :show
     else
       render file: 'public/404', status:404, formats:[:html]
-  	#If the profile page  not found ,then it return the user to the 404 
-  	#erro page in HTML format.
+  	# If the profile page  not found ,then it return the user to the 404 
+  	# error page in HTML format.
   	  end
    end 
  end
