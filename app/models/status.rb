@@ -1,14 +1,10 @@
 class Status < ActiveRecord::Base
-  attr_accessible :content, :user_id
+  attr_accessible :content, :user_id, :document_attributes
   belongs_to :user
+  belongs_to :document
 
-
-  #validating the user content and minimum characters to the post ..i.e two.
   validates :content, presence: true,
                       length: { minimum: 2 }
 
   validates :user_id, presence: true
-                  #    length: { minimum:2 }
-
-    
 end

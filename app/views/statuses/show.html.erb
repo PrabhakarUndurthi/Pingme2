@@ -1,14 +1,37 @@
-	<p id="notice"><%= notice %></p>
+<p id= "notice"><%= notice %>
+	<div class= "row">
+		<div class= "span8 offset2">
+			<%= page_header do %>
+			<h1>
+				<%= avatar_profile_link @status.user %>
+				<%= @status.user.full_name %>
+				<small><%= time_ago_in_words(@status.created_at) + "ago" %> </small>
+			</h1>
+			<% end %>
 
-	<p>
-		<!-- Show the full name of the user, while the user navigate to the show page-->
-	  <b>Name:</b>
-	  <%= @status.user.full_name %> 
-	</p>
-		<!--  While the user reading the old status ,  the user can edit the status and he can come back by clicking on the back button to redirect from that page.-->
-     <p>
-	   <strong>Content:</strong>
-	   <%= @status.content %>
-	</p>
-	<%= link_to 'Edit', edit_status_path(@status) %> |
-	<%= link_to 'Back', statuses_path %>
+			<p>
+				<%= status.content %>
+			</p>
+
+			<hr />
+			<% if @status.document &&  @status.document.attachment? %>
+			<%= status_document_link @status %>
+				<hr />
+			<% end %>
+
+
+			
+	
+			<div class= "meta">
+				<% if signed_in? && @status.user == current_user %>
+				<%= link_to "Edit", edit_status_path(@status) %>
+				<%= link_to "Delete", @status, method: :delete, data: {confirm: "Are you sure want to delete this status?"} %>
+				<% end %>
+			</div>
+		</div>
+	</div>
+
+
+
+
+

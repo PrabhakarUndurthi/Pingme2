@@ -1,6 +1,5 @@
 Pingme::Application.routes.draw do
-  get "profiles/show"
-
+  
   as :user do
     get '/register', to: 'devise/registrations#new', as: :register
     get '/login', to: 'devise/sessions#new', as: :login
@@ -26,7 +25,20 @@ Pingme::Application.routes.draw do
   get 'feed', to: 'statuses#index', as: :feed
   root to: 'statuses#index'
 
+  resourses :statuses
+   get 'feed' , to: 'statuses#index', as: :feed
+   root to: 'statuses#index'
+
+   scope ":profile_name" do 
+    resources :albums do 
+      resources :pictures 
+    end
+  end
+
   get '/:id', to: 'profiles#show', as: 'profile'
+
+
+  
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -84,4 +96,6 @@ Pingme::Application.routes.draw do
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id))(.:format)'
+
+
 end

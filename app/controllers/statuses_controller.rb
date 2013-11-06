@@ -1,13 +1,14 @@
 class StatusesController < ApplicationController
   before_filter :authenticate_user!, only: [:new, :create, :edit, :update]
-  #GET /statuses
-  #GET /statuses.json
+
+  # GET /statuses
+  # GET /statuses.json
   def index
-    @statuses = Status.all
+    @statuses = Status.order('created_at desc').all
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json{ render json: @statuses }
+      format.json { render json: @statuses }
     end
   end
 
@@ -25,7 +26,8 @@ class StatusesController < ApplicationController
   # GET /statuses/new
   # GET /statuses/new.json
   def new
-    @status = Status.new
+    @status = current_user.statuses.new
+    @status.build_document
 
     respond_to do |format|
       format.html # new.html.erb
@@ -41,7 +43,6 @@ class StatusesController < ApplicationController
   # POST /statuses
   # POST /statuses.json
   def create
-    #Allow the current user only to create a new status.
     @status = current_user.statuses.new(params[:status])
 
     respond_to do |format|
@@ -59,11 +60,13 @@ class StatusesController < ApplicationController
   # PUT /statuses/1.json
   def update
     @status = current_user.statuses.find(params[:id])
-     if params[:status] && params[:status].has_key?(:user_id)
-      params[:status].has_key?(:user_id)
-
+    @document = @status.document
+    if params[:status] && params[:status].has_key?(:user_id)
+      params[:status].delete(:user_id) 
+    end
     respond_to do |format|
-      if @status.update_attributes(params[:status])
+      if @status.update_attributes(params[:status]) && 
+        @document && @document.update_attributes(params[:status] [:document_attributes])
         format.html { redirect_to @status, notice: 'Status was successfully updated.' }
         format.json { head :no_content }
       else
@@ -81,11 +84,7 @@ class StatusesController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to statuses_url }
-      format.json{ head :no_content }
-     end
-   end
+      format.json { head :no_content }
+    end
   end
 end
-
-
-

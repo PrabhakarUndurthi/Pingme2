@@ -5,7 +5,7 @@ class UserFriendship < ActiveRecord::Base
 	attr_accessible :user, :friend, :user_id, :friend_id, :state
 	after_destroy :delete_mutual_friendship!
 	# Before the friend request accepted 
-	#the state machine keeps it in pending state.
+	# the state machine keep it in the  pending state.
 
 	state_machine :state, initial: :pending do
 
@@ -33,16 +33,15 @@ class UserFriendship < ActiveRecord::Base
 		UserNotifier.friend_requested(id).deliver
 	end
 
-      #After accepting the friend request , it would gives a nice message to the
+      # After accepting the friend request , it would gives a nice message to the
 	    #user by saying your request has been accpeted.
 
 	def send_acceptence_email
 		UserNotifier.friend_request_accepted(id).deliver
-
 	end
+
 	def mutual_friendship
 		self.class.where({user_id: friend_id: user_id}).first
-
 	end
 
 
