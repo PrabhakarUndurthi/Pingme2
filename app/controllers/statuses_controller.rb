@@ -1,6 +1,8 @@
 class StatusesController < ApplicationController
   before_filter :authenticate_user!, only: [:new, :create, :edit, :update]
 
+  rescue_from ActiveModel::MassAssignmentSecurity::Error, with: :render_permission_error
+
   # GET /statuses
   # GET /statuses.json
   def index
@@ -37,7 +39,7 @@ class StatusesController < ApplicationController
 
   # GET /statuses/1/edit
   def edit
-    @status = Status.find(params[:id])
+    @status = current_user.statuses.find(params[:id])
   end
 
   # POST /statuses
@@ -47,6 +49,7 @@ class StatusesController < ApplicationController
 
     respond_to do |format|
       if @status.save
+        current_user.create_activity(@status, 'created')
         format.html { redirect_to @status, notice: 'Status was successfully created.' }
         format.json { render json: @status, status: :created, location: @status }
       else
@@ -61,26 +64,36 @@ class StatusesController < ApplicationController
   def update
     @status = current_user.statuses.find(params[:id])
     @document = @status.document
-    if params[:status] && params[:status].has_key?(:user_id)
-      params[:status].delete(:user_id) 
-    end
-    respond_to do |format|
-      if @status.update_attributes(params[:status]) && 
-        @document && @document.update_attributes(params[:status] [:document_attributes])
-        format.html { redirect_to @status, notice: 'Status was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @status.errors, status: :unprocessable_entity }
+
+    @status.transaction do
+      @status.update_attributes(params[:status])
+      @document.update_attributes(params[:status][:document]) if @document
+      current_user.create_activity(@status, 'updated')
+      unless @status.valid? || (@status.valid? && @document && !@document.valid?)
+        raise ActiveRecord::Rollback
       end
+    end
+    
+    respond_to do |format|
+      format.html { redirect_to @status, notice: 'Status was successfully updated.' }
+      format.json { head :no_content }
+    end
+  rescue ActiveRecord::Rollback
+    respond_to do |format|
+      format.html do
+        flash.now[:error] = "Update failed."
+        render action: "edit"
+      end
+      format.json { render json: @status.errors, status: :unprocessable_entity }
     end
   end
 
   # DELETE /statuses/1
   # DELETE /statuses/1.json
   def destroy
-    @status = Status.find(params[:id])
+    @status = current_user.statuses.find(params[:id])
     @status.destroy
+    current_user.create_activity(@status, 'deleted')
 
     respond_to do |format|
       format.html { redirect_to statuses_url }

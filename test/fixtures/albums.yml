@@ -1,9 +1,6 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
-  user: 
-  title: MyString
+vacation:
+  user:  prabhakar
+  title: Vacation Pictures
 
-two:
-  user: 
-  title: MyString

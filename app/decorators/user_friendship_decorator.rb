@@ -15,6 +15,19 @@ class UserFriendshipDecorator < Draper::Decorator
     end
   end
 
+  def update_action_verbiage
+    case model.state
+    when 'pending'
+      'Delete'
+    when 'requested'
+      'Accept'
+    when 'accepted'
+      'Update'
+    when 'blocked'
+      'Unblock'
+    end
+  end
+
   # Accessing Helpers
   #   You can access any helper via a proxy
   #

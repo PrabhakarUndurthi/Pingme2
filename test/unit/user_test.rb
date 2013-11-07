@@ -9,6 +9,7 @@ class UserTest < ActiveSupport::TestCase
   should have_many(:requested_friends)
   should have_many(:blocked_user_friendships)
   should have_many(:blocked_friends)
+  should have_many(:activities)
 
   test "a user should enter a first name" do
     user = User.new
@@ -50,7 +51,7 @@ class UserTest < ActiveSupport::TestCase
     user = User.new(first_name: 'Prabhakar', last_name: 'Undurthi', email: 'undurthi.prabhakar@gmail.com')
     user.password = user.password_confirmation = 'asdfasdf'
 
-    user.profile_name = 'prabhakar'
+    user.profile_name = 'prabhakarundurthi_1'
     assert user.valid?
   end
 
@@ -61,13 +62,13 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "that creating friendships on a user works" do
-    users(:prabhaakr).pending_friends << users(:zuke)
+    users(:prabhakar).pending_friends << users(:zuke)
     users(:prabhakar).pending_friends.reload
     assert users(:prabhakar).pending_friends.include?(users(:zuke))
   end
 
   test "that calling to_param on a user returns the profile_name" do
-    assert_equal "prabhakar", users(:prabhakar).to_param
+    assert_equal "prabhakarundurthi", users(:prabhakar).to_param
   end
 
   context "#has_blocked?" do
@@ -77,6 +78,30 @@ class UserTest < ActiveSupport::TestCase
 
     should "return false if a user has not blocked another user" do
       assert !users(:prabhakar).has_blocked?(users(:michel))
+    end
+  end
+
+  context "#create_activity" do
+    should "increas the Activity count" do
+      assert_difference 'Activity.count' do
+        users(:prabhakar).create_activity(statuses(:one), 'created')
+      end
+    end
+
+    should "set the targetable instance to the item passed in" do
+      activity = users(:prabhakar).create_activity(statuses(:one), 'created')
+      assert_equal statuses(:one), activity.targetable
+    end
+
+    should "increas the Activity count with an album" do
+      assert_difference 'Activity.count' do
+        users(:prabhakar).create_activity(albums(:vacation), 'created')
+      end
+    end
+
+    should "set the targetable instance to the item passed in with an album" do
+      activity = users(:prabhakar).create_activity(albums(:vacation), 'created')
+      assert_equal albums(:vacation), activity.targetable
     end
   end
 end

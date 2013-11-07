@@ -10,28 +10,23 @@
       </ul>
     </div>
   <% end %>
-
-<%= f.input :content, input_html: {rows:4 , class: 'input-xxlarge'} %>
-<%= f.fields_for :document do |document_fields| %>
- <% if document_fields.objects.attachment? %>
- <div class= "control-group" >
-  <label class= "control-label"> Current attachment </label>
-  <div class= "controls">
-    <%= link_to document_fields.objects.attachment_file_name, document_fields.object.attachment.url %>
-
-   </div>
-  </div>
-
-  <%= document_fields.input :remove_attachment, as: :boolean, label: "Remove attachment?" %>
-<% end %>
-
- <%= document_fields.input :attachment, as: :file %>
- <% end %>
-
-
   
-  <%= f.input :content %>
+  <%= f.input :content, input_html: { rows: 4, class: 'input-xxlarge' } %>
+  <%= f.fields_for :document do |document_fields| %>
+    <% if document_fields.object.attachment? %>
+    <div class="control-group">
+      <label class="control-label">Current attachment</label>
+      <div class="controls">
+        <%= link_to document_fields.object.attachment_file_name, document_fields.object.attachment.url %>
+      </div>
+    </div>
+    <%= document_fields.input :remove_attachment, as: :boolean, label: "Remove attachment?" %>
+    <% end %>
+    <%= document_fields.input :attachment, as: :file %>
+  <% end %>
+
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= f.button :submit, class: 'btn btn-primary' %>
+    <%= link_to "Back", statuses_path, class: 'btn' %>
   </div>
 <% end %>

@@ -2,7 +2,7 @@
   <h2>Edit My Profile</h2>
 <% end %>
 
-<%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, class: 'form-horizontal ', multipart: true}) do |f| %>
+<%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, class: 'form-horizontal '}) do |f| %>
   <%= devise_error_messages! %>
 
   <fieldset>
@@ -15,16 +15,7 @@
   <fieldset>
     <legend>Profile Picture</legend>
     <%= f.input :avatar, as: :file %>
-    <% if f.object.avatar? %>
-    <div class= "control-group" >
-  <label class= "control-label"> Current avatar</label>
-  <div class= "controls">
-    <%= image_tag f.object.avatar.url(:small) %>
-   </div>
- </div>
-   
-    <% end %>
-    
+    <%= bootstrap_paperclip_picture f, :avatar %>
   </fieldset>
 
   <fieldset>
@@ -44,3 +35,4 @@
     <%= link_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete, class: 'btn btn-danger pull-right' %>
   </div>
 <% end %>
+

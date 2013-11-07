@@ -1,50 +1,52 @@
-	<!DOCTYPE html>
-	<html>
-	<head>
-	  <title>Pingme</title>
-	  <%= stylesheet_link_tag    "application", :media => "all" %>
-	  <%= javascript_include_tag "application" %>
-	  <%= csrf_meta_tags %>
-	</head>
-		<body>
-			<div class="navbar navbar-inverse">
-			<div class="navbar navbar-fixed-top">
-				<div class="navbar-inner">
-					
-					<div class="container">
-						<a href="#" class="brand"> Pingme </a>
-						<ul class="nav">
-							<li><%= link_to "All Statuses", statuses_path %></li>
-						</ul>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pingme</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<% if user_signed_in? %>
+				<%= link_to "Pingme", activities_path, class: 'brand' %>
+				<% else %>
+				<%= link_to "Pingme", root_path, class: 'brand' %>
+				<% end %>
+				<ul class="nav">
+					<li><%= link_to "All Statuses", feed_path %></li>
+					<% if user_signed_in? %>
+						<li><%= link_to "Activity Feed", activities_path %></li>
+					<% end %>
+				</ul>
+				<ul class="nav pull-right">
+					<% if user_signed_in? %>
+						<li><%= link_to 'Albums', albums_path(current_user) %></li>
+						<li><%= link_to 'Friends', user_friendships_path %></li>
+						<li><%= link_to current_user.full_name, edit_user_registration_path %></li>
+						<li><%= link_to "Log Out", logout_path %></li>
+					<% else %>
+						<li><%= link_to "Register", register_path %></li>
+						<li><%= link_to "Log in", login_path %></li>
+					<% end %>
 
-						<ul class= "nav pull-right">
-							<% if user_signed_in? %>
-							<li><%= link_to 'Albums' , albums_path %></li>
-							<li><%= link_to 'Friends', user_friendships_path(current_user) %></li>
-								<li><%= link_to current_user.full_name, "#" %></li>
-								<li><%= link_to "Log Out", logout_path %></li>
-								<% else %>
-								<li><%= link_to "Register", register_path %></li>
-								<li><%= link_to "Log in", login_path %></li>
-								<% end %>
-							</ul>
-						 </div>
-				    </div>
-			     </div>
-		    </div>
-				<div class="container">
-			     <% flash.each do  |type, message| %>
-				  <div class="alert  <%= flash_class type %>">
-				   <button class="close" data-dismiss="alert">×</button>
-				   <%= message %>	
-			    </div>
-			 <% end %> 
-
-		  <%= yield %>
-	 </div>
-    </body>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<%= render_breadcrumbs %>
+		
+		<% flash.each do |type, message| %>
+			<div class="alert <%= flash_class type %>">
+				<button class="close" data-dismiss="alert">×</button>
+				<%= message %>
+			</div>
+		<% end %>
+		    
+		<%= yield %>
+	</div>
+</body>
 </html>
-
-
-
-				  
