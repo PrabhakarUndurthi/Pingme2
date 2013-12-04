@@ -106,9 +106,12 @@ class PicturesController < ApplicationController
     add_breadcrumb "Pictures", album_pictures_path(@album)
   end
 
+# Find the username of the user
   def find_user
     @user = User.find_by_profile_name(params[:profile_name])
   end
+
+# Find the user udploaded Albums.
 
   def find_album
     if signed_in? && current_user.profile_name == params[:profile_name]
@@ -118,6 +121,7 @@ class PicturesController < ApplicationController
     end
   end
 
+# Find the indcidual user pictures.
   def find_picture
     @picture = @album.pictures.find(params[:id])
   end

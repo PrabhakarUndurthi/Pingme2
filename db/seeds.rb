@@ -7,6 +7,9 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 
+
+# Below are the sample test seeds to check the app how its going ....
+
 DEFAULT_INSECURE_PASSWORD = 'password1'
 
 User.create ({
